@@ -3,9 +3,8 @@ import java.util.HashMap;
 public class Epic extends  Task {
     HashMap<Integer, Subtask> subtaskList = new HashMap<>();;
 
-
-    public Epic(String title, String description, int id, TaskStatus status) {
-        super(title, description, id, status);
+    public Epic(String title, String description, TaskStatus status) {
+        super(title, description, status);
     }
 
     @Override
@@ -18,10 +17,4 @@ public class Epic extends  Task {
                 ", subtaskList=" + subtaskList +
                 '}';
     }
-
-    public HashMap<Integer, Subtask> getSubtaskList() {
-        return subtaskList;
-    }
-
-
 }
