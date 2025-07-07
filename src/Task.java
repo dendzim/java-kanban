@@ -6,10 +6,9 @@ public class Task {
     private int id;
     private TaskStatus status;
 
-    public Task(String title, String description, int id, TaskStatus status) {
+    public Task(String title, String description, TaskStatus status) {
         this.title = title;
         this.description = description;
-        this.id = id;
         this.status = status;
     }
 
