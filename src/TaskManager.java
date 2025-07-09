@@ -140,6 +140,10 @@ public class TaskManager {
                 tasks.put(subtask.getId(), subtask);
             }
         }
+        if (tasks.isEmpty()) {
+            epic.setStatus(TaskStatus.NEW);
+            return;
+        }
         for (Subtask task : tasks.values()) { //идем по списку подзадач
             if (task.getStatus().equals(TaskStatus.DONE)) {
                 alldoneCounter++; //повышаем если статус подзадачи done
