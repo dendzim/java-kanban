@@ -12,7 +12,7 @@ public class Subtask extends Task {
 
     @Override
     public String toString() {
-        return "Subtask{" +"title='" + getTitle() + '\'' +
+        return "Subtask{" + "title='" + getTitle() + '\'' +
                 ", description='" + getDescription() + '\'' +
                 ", id=" + getId() +
                 ", status=" + getStatus() +
