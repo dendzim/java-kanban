@@ -42,6 +42,7 @@ public class TaskManager {
 
     public void deleteAllEpic() {
         epicList.clear();
+        subtaskList.clear();
     }
 
     public void deleteEpicSubtask(Epic epic) {
@@ -151,6 +152,7 @@ public class TaskManager {
                 allNewCounter++; //повышаем если статус подзадачи new
             } else {
                 epic.setStatus(TaskStatus.IN_PROGRESS);
+                return;
             }
         }
         if (alldoneCounter == tasks.size()) { //если все задачи в списке done
