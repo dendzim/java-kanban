@@ -1,4 +1,4 @@
-
+package tasks;
 
 public class Task {
     private String title;
@@ -10,6 +10,13 @@ public class Task {
         this.title = title;
         this.description = description;
         this.status = status;
+    }
+
+    public Task(Task task) {
+        this.id = task.id;
+        this.title = task.title;
+        this.description = task.description;
+        this.status = task.status;
     }
 
     public TaskStatus getStatus() {
@@ -30,7 +37,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" +
+        return "tasks.Task{" +
                 "title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", id=" + id +

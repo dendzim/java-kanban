@@ -1,3 +1,5 @@
+package tasks;
+
 public class Subtask extends Task {
     private final int epicId;
 
@@ -12,7 +14,7 @@ public class Subtask extends Task {
 
     @Override
     public String toString() {
-        return "Subtask{" + "title='" + getTitle() + '\'' +
+        return "tasks.Subtask{" + "title='" + getTitle() + '\'' +
                 ", description='" + getDescription() + '\'' +
                 ", id=" + getId() +
                 ", status=" + getStatus() +
