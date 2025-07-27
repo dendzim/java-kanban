@@ -7,14 +7,15 @@ import tasks.TaskStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
     private int idCounter = 0;
-    private HashMap<Integer, Task> taskList = new HashMap<>();
-    private HashMap<Integer, Epic> epicList = new HashMap<>();
-    private HashMap<Integer, Subtask> subtaskList = new HashMap<>();
+    private final Map<Integer, Task> taskList = new HashMap<>();
+    private final Map<Integer, Epic> epicList = new HashMap<>();
+    private final Map<Integer, Subtask> subtaskList = new HashMap<>();
 
-    private HistoryManager historyManager = Managers.getDefaultHistory();
+    private final HistoryManager historyManager = Managers.getDefaultHistory();
 
     @Override
     public ArrayList<Task> getTaskList() {
@@ -163,7 +164,6 @@ public class InMemoryTaskManager implements TaskManager {
         epicList.put(id, oldEpic);
     }
 
-    @Override
     public void checkStatus(Epic epic) {
         int alldoneCounter = 0;
         int allNewCounter = 0;
