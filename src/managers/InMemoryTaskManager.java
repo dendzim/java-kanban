@@ -75,6 +75,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void removeTaskForId(Integer id) {
         taskList.remove(id);
+        historyManager.remove(id);
     }
 
     @Override
@@ -85,13 +86,15 @@ public class InMemoryTaskManager implements TaskManager {
                 subtaskList.remove(subtask.getId());
             }
         }
+        historyManager.remove(id);
     }
 
     @Override
     public void removeSubtaskForId(Integer id) {
         int epicId = subtaskList.get(id).getEpicId();
         subtaskList.remove(id);
-        checkStatus(epicList.get(epicId)); //проверяем статус эпика из которого удалили подзадачу
+        checkStatus(epicList.get(epicId));//проверяем статус эпика из которого удалили подзадачу
+        historyManager.remove(id);
     }
 
     @Override
