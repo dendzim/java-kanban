@@ -58,7 +58,7 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     private Node linkLast(Task task) {
         final Node oldTail = tail;
-        Node newNode = new Node(oldTail , task, null); //создаем узел
+        Node newNode = new Node(oldTail, task, null); //создаем узел
         if (oldTail == null) { //если соседа слева нет
             head = newNode; //голова новый узел
         } else {
