@@ -69,24 +69,28 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     private void removeNode(int id) {
-        final Node node = mapHistory.remove(id);
-        if (node == null) { //Если узлов не было
+        if (mapHistory.containsKey(id)) { //если история содержит элемент с id нужно для удаления
+            final Node node = mapHistory.remove(id);
+            if (node == null) { //Если узлов не было
+                return;
+            }
+            if (node.prev != null) { //Если есть узел слева
+                node.prev.next = node.next; //переписываем у соседа слева ссылку на соседа справа
+                if (node.next == null) { //но если соседа справа нет
+                    tail = node.prev; //хвост списка сосед слева
+                } else {
+                    node.next.prev = node.prev; //сосед справа хвостом ссылается на соседа слева
+                }
+            } else { //Если это первый узел
+                head = node.next; //голова ссылается на соседа справа
+                if (head == null) { //
+                    tail = null;
+                } else {
+                    head.prev = null;
+                }
+            }
+        } else {
             return;
-        }
-        if (node.prev != null) { //Если есть узел слева
-            node.prev.next = node.next; //переписываем у соседа слева ссылку на соседа справа
-            if (node.next == null) { //но если соседа справа нет
-                tail = node.prev; //хвост списка сосед слева
-            } else {
-                node.next.prev = node.prev; //сосед справа хвостом ссылается на соседа слева
-            }
-        } else { //Если это первый узел
-            head = node.next; //голова ссылается на соседа справа
-            if (head == null) { //
-                tail = null;
-            } else {
-                head.prev = null;
-            }
         }
     }
 
