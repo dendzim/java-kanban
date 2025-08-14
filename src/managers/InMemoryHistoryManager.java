@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
-
     private static class Node {
         public Task task;
         public Node next;
@@ -39,14 +38,15 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
         final int id = task.getId();
         removeNode(id);
-        linkLast(task);
-        mapHistory.put(id, head);
+        mapHistory.put(id, linkLast(task));
     }
 
     private ArrayList<Task> getTasks() {
         ArrayList<Task> historyList = new ArrayList<>();
-        for (Integer id : mapHistory.keySet()) {
-            historyList.add(mapHistory.get(id).task);
+        Node copyHead = head;
+        while (copyHead != null) { //идем по копии головы пока не пустая
+            historyList.add(copyHead.task);
+            copyHead = copyHead.next; //копия головы ссылается теперь на соседа справа
         }
         return historyList;
     }
@@ -56,29 +56,36 @@ public class InMemoryHistoryManager implements HistoryManager {
         return getTasks();
     }
 
-    private void linkLast(Task task) {
-        head = new Node(tail, task, head);
+    private Node linkLast(Task task) {
+        final Node oldTail = tail;
+        Node newNode = new Node(oldTail , task, null); //создаем узел
+        if (oldTail == null) { //если соседа слева нет
+            head = newNode; //голова новый узел
+        } else {
+            oldTail.next = newNode; // у соседа слева делаем ссылку на новый узел
+        }
+        tail = newNode; //теперь хвост ссылается на новый узел
+        return tail;
     }
 
     private void removeNode(int id) {
         final Node node = mapHistory.remove(id);
-        if (node == null) {
+        if (node == null) { //Если узлов не было
             return;
         }
-        if (node.prev != null) {
-            node.prev.next = node.next;
-            if (node.next == null) {
-                head = node.prev;
-                head.next = null;
+        if (node.prev != null) { //Если есть узел слева
+            node.prev.next = node.next; //переписываем у соседа слева ссылку на соседа справа
+            if (node.next == null) { //но если соседа справа нет
+                tail = node.prev; //хвост списка сосед слева
             } else {
-                node.next.prev = node.prev;
+                node.next.prev = node.prev; //сосед справа хвостом ссылается на соседа слева
             }
-        } else {
-            tail = node.next;
-            if (tail == null) {
-                head = null;
+        } else { //Если это первый узел
+            head = node.next; //голова ссылается на соседа справа
+            if (head == null) { //
+                tail = null;
             } else {
-                tail.prev = null;
+                head.prev = null;
             }
         }
     }
@@ -86,5 +93,12 @@ public class InMemoryHistoryManager implements HistoryManager {
     @Override
     public void remove(int id) {
         removeNode(id);
+    }
+
+    @Override
+    public void deleteHistory() { //для тестов
+        mapHistory.clear();
+        tail = null;
+        head = null;
     }
 }

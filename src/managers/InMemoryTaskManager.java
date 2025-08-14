@@ -7,6 +7,7 @@ import tasks.TaskStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
@@ -196,5 +197,13 @@ public class InMemoryTaskManager implements TaskManager {
         } else if (allNewCounter == tasks.size()) { //если все задачи в списке new
             epic.setStatus(TaskStatus.NEW);
         }
+    }
+
+    public List<Task> getHistory() {
+        return historyManager.getHistory();
+    }
+
+    public void deleteHistory() {
+        historyManager.deleteHistory();
     }
 }

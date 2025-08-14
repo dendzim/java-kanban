@@ -88,5 +88,26 @@ public class Main {
         System.out.println(inMemoryTaskManager.getAllSubtask());
         System.out.println(inMemoryTaskManager.getEpicList());
         System.out.println(inMemoryTaskManager.getTaskList());
+        //спринт6
+        inMemoryTaskManager.deleteHistory();
+        Task task10 = new Task("1", "тело1", TaskStatus.NEW);
+        Task task20 = new Task("2", "тело2", TaskStatus.IN_PROGRESS);
+        inMemoryTaskManager.addTask(task10);
+        inMemoryTaskManager.addTask(task20);
+        inMemoryTaskManager.getTaskForId(task10.getId());
+        System.out.println("первый таск в истории");
+        System.out.println(inMemoryTaskManager.getHistory());
+        System.out.println();
+        inMemoryTaskManager.getTaskForId(task20.getId());
+        System.out.println("добавили второй");
+        System.out.println(inMemoryTaskManager.getHistory());
+        System.out.println();
+        inMemoryTaskManager.getTaskForId(task10.getId());
+        System.out.println("обратились к первому должен появится в конце и пропасть в начале");
+        System.out.println(inMemoryTaskManager.getHistory());
+
+
+
+
     }
 }
