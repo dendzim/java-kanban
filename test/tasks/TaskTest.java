@@ -4,6 +4,7 @@ import managers.HistoryManager;
 import managers.Managers;
 import managers.TaskManager;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -20,6 +21,7 @@ class TaskTest {
     }
 
     @Test
+    @DisplayName("Добавление задачи")
     void addNewTask() {
         Task task = new Task("Таск", "Тело таска",TaskStatus.NEW);
         taskManager.addTask(task);

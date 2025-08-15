@@ -1,6 +1,7 @@
 package managers;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import tasks.Epic;
 import tasks.Task;
@@ -18,6 +19,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
+    @DisplayName("Проверка присвоения разных id")
     public void getDifferentTypes() {
         Task task = new Task("Таск", "Тело таска", TaskStatus.NEW);
         taskManager.addTask(task);
