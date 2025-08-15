@@ -69,7 +69,6 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     private void removeNode(int id) {
-        if (mapHistory.containsKey(id)) { //если история содержит элемент с id нужно для удаления
             final Node node = mapHistory.remove(id);
             if (node == null) { //Если узлов не было
                 return;
@@ -89,9 +88,6 @@ public class InMemoryHistoryManager implements HistoryManager {
                     head.prev = null;
                 }
             }
-        } else {
-            return;
-        }
     }
 
     @Override

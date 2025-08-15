@@ -139,11 +139,5 @@ public class Main {
         inMemoryTaskManager.removeEpicForId(epic01.getId());
         System.out.println("Удалили эпик с подзадачей");
         System.out.println(inMemoryTaskManager.getHistory());
-
-
-
-
-
-
     }
 }
