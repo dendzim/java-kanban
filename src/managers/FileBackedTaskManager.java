@@ -124,7 +124,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     public static void main(String[] args) {
         File file = new File("files/Task.txt");
         FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(file);
-        Task task001 = new Task ("Task001", "Description", TaskStatus.NEW);
+        Task task001 = new Task("Task001", "Description", TaskStatus.NEW);
         fileBackedTaskManager.addTask(task001);
         Epic epic001 = new Epic("Epic001", "Description",TaskStatus.NEW);
         fileBackedTaskManager.addEpic(epic001);
