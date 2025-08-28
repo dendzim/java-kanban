@@ -1,11 +1,15 @@
+import managers.FileBackedTaskManager;
 import managers.InMemoryTaskManager;
 import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
 import tasks.TaskStatus;
 
+import java.io.File;
+import java.io.IOException;
+
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
         Task task1 = new Task("Переезд", "переезд в другой город", TaskStatus.NEW);
         Task task2 = new Task("Покупка", "покупаем гитару", TaskStatus.IN_PROGRESS);
@@ -139,5 +143,19 @@ public class Main {
         inMemoryTaskManager.removeEpicForId(epic01.getId());
         System.out.println("Удалили эпик с подзадачей");
         System.out.println(inMemoryTaskManager.getHistory());
+
+        //спринт 7
+        File file = new File("files/Task.txt");
+        FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(file);
+        Task task001 = new Task ("Task001", "Description", TaskStatus.NEW);
+        fileBackedTaskManager.addTask(task001);
+        Epic epic001 = new Epic("Epic001", "Description",TaskStatus.NEW);
+        fileBackedTaskManager.addEpic(epic001);
+        Subtask subtask001 = new Subtask("Subtask001", "Description", epic001.getId(), TaskStatus.NEW);
+        fileBackedTaskManager.addSubtask(subtask001);
+        System.out.println();
+        System.out.println(fileBackedTaskManager.toString(task001));
+        System.out.println(fileBackedTaskManager.toString(epic001));
+        System.out.println(fileBackedTaskManager.toString(subtask001));
     }
 }
