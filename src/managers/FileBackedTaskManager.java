@@ -36,15 +36,20 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     public static FileBackedTaskManager loadFromFile(File file) {
         final FileBackedTaskManager taskManager = new FileBackedTaskManager(file);
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            int idCounter = 0;
             reader.readLine(); //пропуск первой строки
             while (reader.ready()) {
                 Task task = fromString(reader.readLine());
+                final int id = task.getId();
+                if (idCounter < id) {
+                    idCounter = id;
+                }
                 if (task.getType() == TaskType.TASK) {
-                    taskManager.addTask(task);
+                    taskManager.taskList.put(task.getId(), task);
                 } else if (task.getType() == TaskType.EPIC) {
-                    taskManager.addEpic((Epic) task);
+                    taskManager.epicList.put(task.getId(), (Epic) task);
                 } else  {
-                    taskManager.addSubtask((Subtask) task);
+                    taskManager.subtaskList.put(task.getId(), (Subtask) task);
                 }
             }
         } catch (IOException ex) {
