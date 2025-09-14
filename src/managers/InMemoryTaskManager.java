@@ -257,6 +257,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void updateEpicDuration(Epic epic) {
         List<Subtask> sub = getEpicSubtask(epic.getId());
         sub.stream()
+                .filter(subtask -> subtask.getStartTime() != null)
                 .forEachOrdered(subtask -> {
                     if (epic.getStartTime() == null || epic.getStartTime().isAfter(subtask.getStartTime())) {
                         epic.setStartTime(subtask.getStartTime());
@@ -279,6 +280,9 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     private void add(Task newTask) {
+        if (newTask.getStartTime() == null) {
+            return;
+        }
         prioritizedTasks.stream()
                 .filter(task -> isCrossed(newTask, task))
                 .findFirst()

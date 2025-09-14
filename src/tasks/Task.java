@@ -8,7 +8,7 @@ public class Task {
     private String description;
     private int id;
     private TaskStatus status;
-    private Duration duration;
+    private Duration duration = Duration.ZERO;
     private LocalDateTime startTime;
 
     public Task(String title, String description, TaskStatus status) {
@@ -17,10 +17,9 @@ public class Task {
         this.status = status;
     }
 
-    public Task(String title, String description, int id, TaskStatus status, Duration duration, LocalDateTime startTime) {
+    public Task(String title, String description, TaskStatus status, Duration duration, LocalDateTime startTime) {
         this.title = title;
         this.description = description;
-        this.id = id;
         this.status = status;
         this.duration = duration;
         this.startTime = startTime;
