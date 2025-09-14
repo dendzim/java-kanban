@@ -6,6 +6,7 @@ import tasks.Subtask;
 import tasks.Task;
 import tasks.TaskStatus;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -265,18 +266,23 @@ public class InMemoryTaskManager implements TaskManager {
                     if (epic.getEndTime() == null || epic.getEndTime().isBefore(subtask.getEndTime())) {
                         epic.setEndTime(subtask.getEndTime());
                     }
-                    epic.setDuration(epic.getDuration().plus(subtask.getDuration()));
                 });
+        Duration totalDuration = sub.stream()
+                .filter(subtask -> subtask.getStartTime() != null)
+                .map(Subtask::getDuration)
+                .reduce(Duration.ZERO, Duration::plus);
+
+        epic.setDuration(totalDuration);
     }
 
     public boolean isCrossed(Task task1, Task task2) {
         LocalDateTime start1 = task1.getStartTime();
-        LocalDateTime start2 = task1.getStartTime();
-
         LocalDateTime end1 = task1.getEndTime();
-        LocalDateTime end2 = task1.getEndTime();
 
-        return !start1.isAfter(end2) || !start2.isAfter(end1);
+        LocalDateTime start2 = task2.getStartTime();
+        LocalDateTime end2 = task2.getEndTime();
+        boolean notCrossed = start1.isAfter(end2) || start2.isAfter(end1);
+        return !notCrossed;
     }
 
     private void add(Task newTask) {
@@ -289,7 +295,7 @@ public class InMemoryTaskManager implements TaskManager {
                 .ifPresentOrElse(
                         task -> {
                             String message = "Задача пересекается с задачей с id: " + task.getId() + " с началом: "
-                                    + task.getStartTime() + "и концом: " + task.getEndTime();
+                                    + task.getStartTime() + " и концом: " + task.getEndTime();
                             throw new TaskValidationException(message);
                         },
                         () -> prioritizedTasks.add(newTask)

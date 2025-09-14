@@ -90,18 +90,26 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
         if (TaskType.valueOf(str[1]) == (TaskType.TASK)) {
             Task task = new Task(str[2], str[4], TaskStatus.valueOf(str[3]));
+            if (str[8] == null || str[7] == null) {
+                task.setDuration(Duration.ofMinutes(Integer.parseInt(str[8])));
+                task.setStartTime(LocalDateTime.parse(str[7]));
+            }
             task.setId(Integer.parseInt(str[0]));
             return task;
         } else if (TaskType.valueOf(str[1]) == (TaskType.EPIC)) {
             Epic task = new Epic(str[2], str[4], TaskStatus.valueOf(str[3]));
-            task.setDuration(Duration.ofMinutes(Integer.parseInt(str[8])));
-            task.setStartTime(LocalDateTime.parse(str[7]));
+            if (str[8] == null || str[7] == null) {
+                task.setDuration(Duration.ofMinutes(Integer.parseInt(str[8])));
+                task.setStartTime(LocalDateTime.parse(str[7]));
+            }
             task.setId(Integer.parseInt(str[0]));
             return task;
         } else {
             Subtask task = new Subtask(str[2], str[4], Integer.parseInt(str[6]), TaskStatus.valueOf(str[3]));
-            task.setDuration(Duration.ofMinutes(Integer.parseInt(str[8])));
-            task.setStartTime(LocalDateTime.parse(str[7]));
+            if (str[8] == null || str[7] == null) {
+                task.setDuration(Duration.ofMinutes(Integer.parseInt(str[8])));
+                task.setStartTime(LocalDateTime.parse(str[7]));
+            }
             task.setId(Integer.parseInt(str[0]));
             return task;
         }
@@ -146,12 +154,14 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     public static void main(String[] args) {
         File file = new File("files/Task.txt");
         FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(file);
-        Task task001 = new Task("Task001", "Description", TaskStatus.NEW);
+        Task task001 = new Task("Task001", "Description", TaskStatus.NEW, Duration.ofMinutes(60), LocalDateTime.of(2024, 2, 2, 11, 0));
         fileBackedTaskManager.addTask(task001);
         Epic epic001 = new Epic("Epic001", "Description",TaskStatus.NEW);
         fileBackedTaskManager.addEpic(epic001);
         Subtask subtask001 = new Subtask("Subtask001", "Description", epic001.getId(), TaskStatus.NEW, Duration.ofMinutes(70), LocalDateTime.of(2025, 1, 1, 10, 0));
         fileBackedTaskManager.addSubtask(subtask001);
+        Subtask subtask002 = new Subtask("Subtask002", "Description", epic001.getId(), TaskStatus.NEW, Duration.ofMinutes(70), LocalDateTime.of(2025, 1, 1, 11, 20));
+        fileBackedTaskManager.addSubtask(subtask002);
         fileBackedTaskManager.deleteAllEpic();
         fileBackedTaskManager.deleteAllSubtask();
         fileBackedTaskManager.deleteTaskList();
