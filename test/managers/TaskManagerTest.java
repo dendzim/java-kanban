@@ -45,7 +45,8 @@ public abstract class TaskManagerTest <T extends TaskManager> {
     void createEpicAndSub() {
         epic = new Epic("Epic001", "Description",TaskStatus.NEW);
         taskManager.addEpic(epic);
-        subtask1 = new Subtask("Subtask001", "Description", epic.getId(), TaskStatus.NEW, Duration.ofMinutes(70), LocalDateTime.of(2025, 1, 1, 10, 0));
+        subtask1 = new Subtask("Subtask001", "Description", epic.getId(), TaskStatus.NEW,
+                Duration.ofMinutes(70), LocalDateTime.of(2025, 1, 1, 10, 0));
         taskManager.addSubtask(subtask1);
         assertNotNull(epic.getId());
         assertNotNull(subtask1.getId());
@@ -65,8 +66,10 @@ public abstract class TaskManagerTest <T extends TaskManager> {
     void getEpicSubtasks() {
         epic = new Epic("Epic001", "Description",TaskStatus.NEW);
         taskManager.addEpic(epic);
-        subtask1 = new Subtask("Subtask001", "Description", epic.getId(), TaskStatus.NEW, Duration.ofMinutes(70), LocalDateTime.of(2025, 1, 1, 10, 0));
-        subtask2 = new Subtask("Subtask002", "Description", epic.getId(), TaskStatus.NEW, Duration.ofMinutes(70), LocalDateTime.of(2025, 1, 1, 11, 20));
+        subtask1 = new Subtask("Subtask001", "Description", epic.getId(), TaskStatus.NEW,
+                Duration.ofMinutes(70), LocalDateTime.of(2025, 1, 1, 10, 0));
+        subtask2 = new Subtask("Subtask002", "Description", epic.getId(), TaskStatus.NEW,
+                Duration.ofMinutes(70), LocalDateTime.of(2025, 1, 1, 11, 20));
         taskManager.addSubtask(subtask1);
         taskManager.addSubtask(subtask2);
 
@@ -102,8 +105,10 @@ public abstract class TaskManagerTest <T extends TaskManager> {
     void notCrossedDates() {
         epic = new Epic("Epic001", "Description",TaskStatus.NEW);
         taskManager.addEpic(epic);
-        subtask1 = new Subtask("Subtask001", "Description", epic.getId(), TaskStatus.NEW, Duration.ofMinutes(70), LocalDateTime.of(2025, 1, 1, 10, 0));
-        subtask2 = new Subtask("Subtask002", "Description", epic.getId(), TaskStatus.NEW, Duration.ofMinutes(70), LocalDateTime.of(2025, 1, 1, 11, 20));
+        subtask1 = new Subtask("Subtask001", "Description", epic.getId(), TaskStatus.NEW,
+                Duration.ofMinutes(70), LocalDateTime.of(2025, 1, 1, 10, 0));
+        subtask2 = new Subtask("Subtask002", "Description", epic.getId(), TaskStatus.NEW,
+                Duration.ofMinutes(70), LocalDateTime.of(2025, 1, 1, 11, 20));
 
         assertDoesNotThrow(() -> {
             taskManager.addSubtask(subtask1);
@@ -115,8 +120,10 @@ public abstract class TaskManagerTest <T extends TaskManager> {
     void isCrossedDates() {
         epic = new Epic("Epic001", "Description",TaskStatus.NEW);
         taskManager.addEpic(epic);
-        subtask1 = new Subtask("Subtask001", "Description", epic.getId(), TaskStatus.NEW, Duration.ofMinutes(70), LocalDateTime.of(2025, 1, 1, 11, 0));
-        subtask2 = new Subtask("Subtask002", "Description", epic.getId(), TaskStatus.NEW, Duration.ofMinutes(70), LocalDateTime.of(2025, 1, 1, 11, 20));
+        subtask1 = new Subtask("Subtask001", "Description", epic.getId(), TaskStatus.NEW,
+                Duration.ofMinutes(70), LocalDateTime.of(2025, 1, 1, 11, 0));
+        subtask2 = new Subtask("Subtask002", "Description", epic.getId(), TaskStatus.NEW,
+                Duration.ofMinutes(70), LocalDateTime.of(2025, 1, 1, 11, 20));
 
         taskManager.addSubtask(subtask1);
 
