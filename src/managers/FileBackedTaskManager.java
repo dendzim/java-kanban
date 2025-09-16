@@ -154,13 +154,16 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     public static void main(String[] args) {
         File file = new File("files/Task.txt");
         FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(file);
-        Task task001 = new Task("Task001", "Description", TaskStatus.NEW, Duration.ofMinutes(60), LocalDateTime.of(2024, 2, 2, 11, 0));
+        Task task001 = new Task("Task001", "Description", TaskStatus.NEW,
+                Duration.ofMinutes(60), LocalDateTime.of(2024, 2, 2, 11, 0));
         fileBackedTaskManager.addTask(task001);
         Epic epic001 = new Epic("Epic001", "Description",TaskStatus.NEW);
         fileBackedTaskManager.addEpic(epic001);
-        Subtask subtask001 = new Subtask("Subtask001", "Description", epic001.getId(), TaskStatus.NEW, Duration.ofMinutes(70), LocalDateTime.of(2025, 1, 1, 10, 0));
+        Subtask subtask001 = new Subtask("Subtask001", "Description", epic001.getId(), TaskStatus.NEW,
+                Duration.ofMinutes(70), LocalDateTime.of(2025, 1, 1, 10, 0));
         fileBackedTaskManager.addSubtask(subtask001);
-        Subtask subtask002 = new Subtask("Subtask002", "Description", epic001.getId(), TaskStatus.NEW, Duration.ofMinutes(70), LocalDateTime.of(2025, 1, 1, 11, 20));
+        Subtask subtask002 = new Subtask("Subtask002", "Description", epic001.getId(), TaskStatus.NEW,
+                Duration.ofMinutes(70), LocalDateTime.of(2025, 1, 1, 11, 20));
         fileBackedTaskManager.addSubtask(subtask002);
         fileBackedTaskManager.deleteAllEpic();
         fileBackedTaskManager.deleteAllSubtask();
