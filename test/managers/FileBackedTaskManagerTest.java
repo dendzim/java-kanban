@@ -12,13 +12,13 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class FileBackedTaskManagerTest {
+class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
 
     File temp;
     FileBackedTaskManager taskManager;
 
-    @BeforeEach
-    public void createHistoryManager() {
+    @Override
+    protected FileBackedTaskManager createTaskManager() {
         {
             try {
                 temp = File.createTempFile("Test", ".txt");
@@ -27,6 +27,12 @@ public class FileBackedTaskManagerTest {
             }
         }
         taskManager = new FileBackedTaskManager(temp);
+        return taskManager;
+    }
+
+    @BeforeEach
+    public void createHistoryManager() {
+
     }
 
     @Test
@@ -39,10 +45,10 @@ public class FileBackedTaskManagerTest {
     @Test
     @DisplayName("Сохранение файлов")
     public void saveTasksToFile() {
-        Task task001 = new Task ("Task001", "Description", TaskStatus.NEW);
-        taskManager.addTask(task001);
-        Task task002 = new Task ("Task002", "Description", TaskStatus.IN_PROGRESS);
-        taskManager.addTask(task002);
+        task1 = new Task ("Task001", "Description", TaskStatus.NEW);
+        taskManager.addTask(task1);
+        task2 = new Task ("Task002", "Description", TaskStatus.IN_PROGRESS);
+        taskManager.addTask(task2);
         assertTrue(temp.exists());
         assertTrue(temp.length() > 0);
     }
