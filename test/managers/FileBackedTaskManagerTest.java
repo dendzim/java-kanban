@@ -1,6 +1,5 @@
 package managers;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import tasks.Task;
@@ -30,21 +29,16 @@ class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
         return taskManager;
     }
 
-    @BeforeEach
-    public void createHistoryManager() {
-
-    }
-
     @Test
     @DisplayName("Сохранение пустого файла")
-    public void saveFile() {
+    public void testSaveFile() {
         taskManager.save();
         assertTrue(temp.exists());
     }
 
     @Test
     @DisplayName("Сохранение файлов")
-    public void saveTasksToFile() {
+    public void testSaveTasksToFile() {
         task1 = new Task ("Task001", "Description", TaskStatus.NEW);
         taskManager.addTask(task1);
         task2 = new Task ("Task002", "Description", TaskStatus.IN_PROGRESS);
@@ -55,7 +49,7 @@ class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
 
     @Test
     @DisplayName("Загрузка файлов")
-    public void loadFile() {
+    public void testLoadFile() {
         FileBackedTaskManager taskManager1 = FileBackedTaskManager.loadFromFile(temp);
         assertEquals(taskManager1.getTaskList().size(), taskManager.getTaskList().size());
     }

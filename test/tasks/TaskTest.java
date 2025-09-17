@@ -1,6 +1,5 @@
 package tasks;
 
-import managers.HistoryManager;
 import managers.Managers;
 import managers.TaskManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +21,7 @@ class TaskTest {
 
     @Test
     @DisplayName("Добавление задачи")
-    void addNewTask() {
+    void testAddNewTask() {
         Task task = new Task("Таск", "Тело таска",TaskStatus.NEW);
         taskManager.addTask(task);
         final int taskId = task.getId();

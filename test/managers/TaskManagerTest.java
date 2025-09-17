@@ -4,7 +4,6 @@ import exceptions.TaskValidationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
@@ -16,7 +15,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public abstract class TaskManagerTest <T extends TaskManager> {
+public abstract class TaskManagerTest<T extends TaskManager> {
     protected T taskManager;
     protected Epic epic;
     protected Subtask subtask1;
@@ -32,7 +31,8 @@ public abstract class TaskManagerTest <T extends TaskManager> {
     }
 
     @Test
-    void createTask() {
+    @DisplayName("Создание задачи")
+    void testCreateTask() {
         task1 = new Task("Переезд", "переезд в другой город", TaskStatus.NEW);
         taskManager.addTask(task1);
         assertNotNull(task1.getId());
@@ -42,7 +42,7 @@ public abstract class TaskManagerTest <T extends TaskManager> {
 
     @Test
     @DisplayName("Создание эпика и подзадачи")
-    void createEpicAndSub() {
+    void testCreateEpicAndSub() {
         epic = new Epic("Epic001", "Description",TaskStatus.NEW);
         taskManager.addEpic(epic);
         subtask1 = new Subtask("Subtask001", "Description", epic.getId(), TaskStatus.NEW,
@@ -55,7 +55,8 @@ public abstract class TaskManagerTest <T extends TaskManager> {
     }
 
     @Test
-    void deleteTask() {
+    @DisplayName("Проверка удаления задачи")
+    void testDeleteTask() {
         task1 = new Task("Переезд", "переезд в другой город", TaskStatus.NEW);
         taskManager.addTask(task1);
         taskManager.removeTaskForId(task1.getId());
@@ -63,7 +64,8 @@ public abstract class TaskManagerTest <T extends TaskManager> {
     }
 
     @Test
-    void getEpicSubtasks() {
+    @DisplayName("Проверка получения эпика и подзадач")
+    void testGetEpicSubtasks() {
         epic = new Epic("Epic001", "Description",TaskStatus.NEW);
         taskManager.addEpic(epic);
         subtask1 = new Subtask("Subtask001", "Description", epic.getId(), TaskStatus.NEW,
@@ -81,7 +83,7 @@ public abstract class TaskManagerTest <T extends TaskManager> {
 
     @Test
     @DisplayName("Проверка присвоения разных id")
-    void getDifferentTypesId() {
+    void testGetDifferentTypesId() {
         task1 = new Task("Переезд", "переезд в другой город", TaskStatus.NEW);
         taskManager.addTask(task1);
         task2 = new Task("Переезд", "переезд в другой город", TaskStatus.NEW);
@@ -91,7 +93,8 @@ public abstract class TaskManagerTest <T extends TaskManager> {
     }
 
     @Test
-    void tasksWithoutTimeDoNotConflict() {
+    @DisplayName("Проверка что задачи без даты не конфликтуют")
+    void testTasksWithoutTimeDoNotConflict() {
         task1 = new Task("Task 1", "Description", TaskStatus.NEW, null, null);
         task2 = new Task("Task 2", "Description", TaskStatus.NEW, null, null);
 
@@ -102,7 +105,8 @@ public abstract class TaskManagerTest <T extends TaskManager> {
     }
 
     @Test
-    void notCrossedDates() {
+    @DisplayName("Проверка условия когда задачи не пересекаются")
+    void testNotCrossedDates() {
         epic = new Epic("Epic001", "Description",TaskStatus.NEW);
         taskManager.addEpic(epic);
         subtask1 = new Subtask("Subtask001", "Description", epic.getId(), TaskStatus.NEW,
@@ -117,7 +121,8 @@ public abstract class TaskManagerTest <T extends TaskManager> {
     }
 
     @Test
-    void isCrossedDates() {
+    @DisplayName("Проверка когда задачи пересекаются")
+    void testIsCrossedDates() {
         epic = new Epic("Epic001", "Description",TaskStatus.NEW);
         taskManager.addEpic(epic);
         subtask1 = new Subtask("Subtask001", "Description", epic.getId(), TaskStatus.NEW,

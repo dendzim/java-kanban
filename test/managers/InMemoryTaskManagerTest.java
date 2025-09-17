@@ -1,28 +1,21 @@
 package managers;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tasks.Epic;
 import tasks.Subtask;
-import tasks.Task;
 import tasks.TaskStatus;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager>{
+class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
 
     @Override
     protected InMemoryTaskManager createTaskManager() {
         return new InMemoryTaskManager();
     }
 
-    @BeforeEach
-    public void setUp() {
-        taskManager = createTaskManager();
-    }
-
     @Test
-    public void epicStatusTest() {
+    public void testEpicStatus() {
         epic = new Epic("Эпик", "Тело эпика",TaskStatus.NEW);
         taskManager.addEpic(epic);
         subtask1 = new Subtask("Sub1", "Description", epic.getId(), TaskStatus.NEW);

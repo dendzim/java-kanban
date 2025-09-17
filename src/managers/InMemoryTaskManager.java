@@ -31,13 +31,6 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public List<Subtask> getEpicSubtask(Integer epicId) { //Выводит список подзадач эпика
-        /*List<Subtask> currentEpic = new ArrayList<>();
-        for (Subtask subtask : subtaskList.values()) {
-            if (subtask.getEpicId() == epicId) {
-                currentEpic.add(subtask);
-            }
-        }
-        return currentEpic; */
         Epic epic = epicList.get(epicId);
         if (epic == null) {
             return null;
@@ -57,6 +50,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteTaskList() {
         for (Integer id : taskList.keySet()) {
             historyManager.remove(id);
+            delete(taskList.get(id));
         }
         taskList.clear();
     }
@@ -65,6 +59,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteAllSubtask() {
         for (Integer id : subtaskList.keySet()) {
             historyManager.remove(id);
+            delete(subtaskList.get(id));
         }
         subtaskList.clear();
         for (Epic epic : epicList.values()) { //идем по списку эпиков
@@ -76,10 +71,12 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteAllEpic() {
         for (Integer id : epicList.keySet()) {
             historyManager.remove(id);
+            delete(epicList.get(id));
         }
         epicList.clear();
         for (Integer id : subtaskList.keySet()) {
             historyManager.remove(id);
+            delete(subtaskList.get(id));
         }
         subtaskList.clear();
     }
