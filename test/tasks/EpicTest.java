@@ -21,7 +21,7 @@ class EpicTest {
 
     @Test
     @DisplayName("Добавление эпика")
-    void addNewEpic() {
+    void testAddNewEpic() {
         Epic epic = new Epic("Эпик", "Тело эпика",TaskStatus.NEW);
         taskManager.addEpic(epic);
         final int epicId = epic.getId();

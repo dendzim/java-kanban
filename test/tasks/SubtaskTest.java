@@ -21,7 +21,7 @@ class SubtaskTest {
 
     @Test
     @DisplayName("Добавление подзадачи")
-    void addNewSubtask() {
+    void testAddNewSubtask() {
         Epic epic = new Epic("Эпик", "Тело эпика",TaskStatus.NEW);
         taskManager.addEpic(epic);
         Subtask subtask = new Subtask("подзадача", "тело", epic.getId(), TaskStatus.NEW);

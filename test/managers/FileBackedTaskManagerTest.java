@@ -1,6 +1,5 @@
 package managers;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import tasks.Task;
@@ -12,13 +11,13 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class FileBackedTaskManagerTest {
+class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
 
     File temp;
     FileBackedTaskManager taskManager;
 
-    @BeforeEach
-    public void createHistoryManager() {
+    @Override
+    protected FileBackedTaskManager createTaskManager() {
         {
             try {
                 temp = File.createTempFile("Test", ".txt");
@@ -27,29 +26,30 @@ public class FileBackedTaskManagerTest {
             }
         }
         taskManager = new FileBackedTaskManager(temp);
+        return taskManager;
     }
 
     @Test
     @DisplayName("Сохранение пустого файла")
-    public void saveFile() {
+    public void testSaveFile() {
         taskManager.save();
         assertTrue(temp.exists());
     }
 
     @Test
     @DisplayName("Сохранение файлов")
-    public void saveTasksToFile() {
-        Task task001 = new Task ("Task001", "Description", TaskStatus.NEW);
-        taskManager.addTask(task001);
-        Task task002 = new Task ("Task002", "Description", TaskStatus.IN_PROGRESS);
-        taskManager.addTask(task002);
+    public void testSaveTasksToFile() {
+        task1 = new Task ("Task001", "Description", TaskStatus.NEW);
+        taskManager.addTask(task1);
+        task2 = new Task ("Task002", "Description", TaskStatus.IN_PROGRESS);
+        taskManager.addTask(task2);
         assertTrue(temp.exists());
         assertTrue(temp.length() > 0);
     }
 
     @Test
     @DisplayName("Загрузка файлов")
-    public void loadFile() {
+    public void testLoadFile() {
         FileBackedTaskManager taskManager1 = FileBackedTaskManager.loadFromFile(temp);
         assertEquals(taskManager1.getTaskList().size(), taskManager.getTaskList().size());
     }
