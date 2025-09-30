@@ -8,7 +8,6 @@ import http.HttpTaskServer;
 import managers.TaskManager;
 import tasks.Epic;
 import tasks.Subtask;
-import tasks.Task;
 
 import java.io.IOException;
 import java.util.List;
@@ -38,7 +37,7 @@ public class EpicHandler extends BaseHttpHandler implements HttpHandler {
                         System.out.println("Получили список эпиков");
                         sendText(exchange, response, 200);
                         break;
-                    } else if (idFromPath > 0 && (path.split("/")[3]).equals("subtasks")) {
+                    } else if ((path.split("/").length > 3) && "subtasks".equals(path.split("/")[3])) {
                         Epic epic = taskManager.getEpicForId(idFromPath);
                         if (epic != null) {
                             List<Subtask> epicSubList = taskManager.getEpicSubtask(idFromPath);
@@ -64,21 +63,14 @@ public class EpicHandler extends BaseHttpHandler implements HttpHandler {
                 case "POST": {
                     String body = readText(exchange);
                     Epic epic = gson.fromJson(body, Epic.class);
-                    int epicId = epic.getId();
-                    if (epicId > 0) {
-                        taskManager.updateEpic(epic);
-                        System.out.println("Обновили эпик с id: " + epicId);
-                        exchange.sendResponseHeaders(200, -1);
-                    } else {
-                        try {
-                            taskManager.addEpic(epic);
-                            int addId = epic.getId();
-                            System.out.println("Создали эпик с id: " + addId);
-                            String response = gson.toJson(epic);
-                            sendText(exchange, response, 201);
-                        } catch (TaskValidationException ex) {
-                            sendHasOverlaps(exchange);
-                        }
+                    try {
+                        taskManager.addEpic(epic);
+                        int epicId = epic.getId();
+                        System.out.println("Создали эпик с id: " + epicId);
+                        String response = gson.toJson(epic);
+                        sendText(exchange, response, 201);
+                    } catch (TaskValidationException ex) {
+                        sendHasOverlaps(exchange);
                     }
                     break;
                 }

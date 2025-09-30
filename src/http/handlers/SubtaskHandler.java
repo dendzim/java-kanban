@@ -7,7 +7,6 @@ import exceptions.TaskValidationException;
 import http.HttpTaskServer;
 import managers.TaskManager;
 import tasks.Subtask;
-import tasks.Task;
 
 import java.io.IOException;
 import java.util.List;
@@ -51,21 +50,14 @@ public class SubtaskHandler extends BaseHttpHandler implements HttpHandler {
                 case "POST": {
                     String body = readText(exchange);
                     Subtask subtask = gson.fromJson(body, Subtask.class);
-                    int subtaskId = subtask.getId();
-                    if (subtaskId > 0) {
-                        taskManager.updateSubtask(subtask);
-                        System.out.println("Обновили подзадачу с id: " + subtaskId);
-                        exchange.sendResponseHeaders(200, -1);
-                    } else {
-                        try {
-                            taskManager.addSubtask(subtask);
-                            int addId = subtask.getId();
-                            System.out.println("Создали подзадачу с id: " + addId);
-                            String response = gson.toJson(subtask);
-                            sendText(exchange, response, 201);
-                        } catch (TaskValidationException ex) {
-                            sendHasOverlaps(exchange);
-                        }
+                    try {
+                        taskManager.addSubtask(subtask);
+                        int addId = subtask.getId();
+                        System.out.println("Создали подзадачу с id: " + addId);
+                        String response = gson.toJson(subtask);
+                        sendText(exchange, response, 201);
+                    } catch (TaskValidationException ex) {
+                        sendHasOverlaps(exchange);
                     }
                     break;
                 }

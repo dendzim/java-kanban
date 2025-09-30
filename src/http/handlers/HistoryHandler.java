@@ -22,7 +22,9 @@ public class HistoryHandler extends BaseHttpHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
+        String path = exchange.getRequestURI().getPath();
         String method = exchange.getRequestMethod();
+        System.out.println("Request: " + method + " " + path);
         switch (method) {
             case "GET": {
                 List<Task> history = taskManager.getHistory();

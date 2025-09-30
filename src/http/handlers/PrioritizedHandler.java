@@ -8,7 +8,6 @@ import managers.TaskManager;
 import tasks.Task;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Set;
 
 public class PrioritizedHandler extends BaseHttpHandler implements HttpHandler {
@@ -23,7 +22,9 @@ public class PrioritizedHandler extends BaseHttpHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
+        String path = exchange.getRequestURI().getPath();
         String method = exchange.getRequestMethod();
+        System.out.println("Request: " + method + " " + path);
         switch (method) {
             case "GET": {
                 Set<Task> history = taskManager.getprioritizedTasks();
