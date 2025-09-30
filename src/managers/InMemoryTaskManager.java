@@ -99,8 +99,8 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void removeTaskForId(Integer id) {
-        taskList.remove(id);
         delete(taskList.get(id));
+        taskList.remove(id);
         historyManager.remove(id);
 
     }
@@ -125,8 +125,8 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void removeSubtaskForId(Integer id) {
         int epicId = subtaskList.get(id).getEpicId();
-        subtaskList.remove(id);
         delete(subtaskList.get(id));
+        subtaskList.remove(id);
         checkStatus(epicList.get(epicId));//проверяем статус эпика из которого удалили подзадачу
         historyManager.remove(id);
         updateEpic(epicList.get(epicId));
@@ -154,8 +154,8 @@ public class InMemoryTaskManager implements TaskManager {
     public void addTask(Task task) {
         idCounter++;
         task.setId(idCounter);
-        taskList.put(task.getId(), task);
         add(task);
+        taskList.put(task.getId(), task);
     }
 
     @Override
@@ -171,8 +171,8 @@ public class InMemoryTaskManager implements TaskManager {
         idCounter++;
         subtask.setId(idCounter);
         int currentEpicId = subtask.getEpicId();
-        subtaskList.put(subtask.getId(), subtask);
         add(subtask);
+        subtaskList.put(subtask.getId(), subtask);
         updateEpic(epicList.get(currentEpicId));
     }
 
@@ -301,5 +301,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     private void delete(Task task) {
         prioritizedTasks.remove(task);
+    }
+
+    public Set<Task> getprioritizedTasks() {
+        return prioritizedTasks;
     }
 }
