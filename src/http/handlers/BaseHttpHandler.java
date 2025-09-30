@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
 public class BaseHttpHandler{
+
     protected void sendText(HttpExchange h, String responseString, int responseCode) throws IOException {
         byte[] resp = responseString.getBytes(StandardCharsets.UTF_8);
         h.getResponseHeaders().set("Content-Type", "application/json;charset=utf-8");
