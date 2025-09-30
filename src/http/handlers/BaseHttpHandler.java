@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
-public class BaseHttpHandler{
+public class BaseHttpHandler {
 
     protected void sendText(HttpExchange h, String responseString, int responseCode) throws IOException {
         byte[] resp = responseString.getBytes(StandardCharsets.UTF_8);
