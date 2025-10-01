@@ -1,5 +1,6 @@
 package tasks;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class Epic extends Task {
@@ -7,6 +8,10 @@ public class Epic extends Task {
 
     public Epic(String title, String description, TaskStatus status) {
         super(title, description, status);
+    }
+
+    public Epic(String title, String description, TaskStatus status, Duration duration, LocalDateTime startTime) {
+        super(title, description, status, duration, startTime);
     }
 
     @Override
