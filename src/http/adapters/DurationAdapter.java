@@ -7,9 +7,9 @@ import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.time.Duration;
 
-public class DurationAdapter extends TypeAdapter<java.time.Duration> {
+public class DurationAdapter extends TypeAdapter<Duration> {
     @Override
-    public void write(JsonWriter jsonWriter, java.time.Duration duration) throws IOException {
+    public void write(JsonWriter jsonWriter, Duration duration) throws IOException {
         if (duration == null) {
             jsonWriter.nullValue();
         } else {
@@ -18,7 +18,7 @@ public class DurationAdapter extends TypeAdapter<java.time.Duration> {
     }
 
     @Override
-    public java.time.Duration read(JsonReader jsonReader) throws IOException {
+    public Duration read(JsonReader jsonReader) throws IOException {
         if (jsonReader.peek() == com.google.gson.stream.JsonToken.NULL) {
             jsonReader.nextNull();
             return null;

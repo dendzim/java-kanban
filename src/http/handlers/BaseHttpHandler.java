@@ -19,7 +19,7 @@ public class BaseHttpHandler {
 
     protected void sendNotFound(HttpExchange h) throws IOException {
         byte[] resp = "Not Found".getBytes(StandardCharsets.UTF_8);
-        h.getResponseHeaders().add("Content-Type", "application/json;charset=utf-8");
+        h.getResponseHeaders().add("Content-Type", "text/plain");
         h.sendResponseHeaders(404, resp.length);
         h.getResponseBody().write(resp);
         h.close();
@@ -27,7 +27,7 @@ public class BaseHttpHandler {
 
     protected void sendHasOverlaps(HttpExchange h) throws IOException {
         byte[] resp = "Not Acceptable".getBytes(StandardCharsets.UTF_8);
-        h.getResponseHeaders().add("Content-Type", "application/json;charset=utf-8");
+        h.getResponseHeaders().add("Content-Type", "text/plain");
         h.sendResponseHeaders(406, resp.length);
         h.getResponseBody().write(resp);
         h.close();

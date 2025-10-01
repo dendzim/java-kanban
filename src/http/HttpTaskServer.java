@@ -45,7 +45,7 @@ public class HttpTaskServer {
     }
 
     public void stop() {
-        kanbanServer.stop(200);
+        kanbanServer.stop(3);
     }
 
     public static void main(String[] args) {
